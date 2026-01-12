@@ -13,7 +13,7 @@ A simple web application with Python Flask backend and HTML/CSS/JavaScript front
 ## Project Structure
 
 ```
-newapp26/
+azhartaskapp/
 ├── app.py                 # Flask backend server
 ├── requirements.txt       # Python dependencies
 ├── templates/
@@ -26,14 +26,29 @@ newapp26/
 
 ## How to Run
 
-1. **Make sure the virtual environment is active and dependencies are installed** (already done)
-
-2. **Start the Flask server:**
+1. **Clone the repository:**
    ```bash
-   C:/co-pilot/newapp26/.venv/Scripts/python.exe app.py
+   git clone https://github.com/ibnehussain/azhartaskapp.git
+   cd azhartaskapp
    ```
 
-3. **Open your browser and go to:**
+2. **Set up virtual environment:**
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate  # On Windows
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Start the Flask server:**
+   ```bash
+   python app.py
+   ```
+
+5. **Open your browser and go to:**
    ```
    http://localhost:5000
    ```
@@ -60,3 +75,4 @@ newapp26/
 - Implement data persistence (database)
 - Add task categories/tags
 - Deploy to cloud platform
+
