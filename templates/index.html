@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <!-- Hero Banner Section -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to Task Manager</h1>
+            <p class="hero-subtitle">Organize your work, boost your productivity, achieve your goals</p>
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <span class="hero-icon">✅</span>
+                    <span>Simple & Intuitive</span>
+                </div>
+                <div class="hero-feature">
+                    <span class="hero-icon">⚡</span>
+                    <span>Fast & Responsive</span>
+                </div>
+                <div class="hero-feature">
+                    <span class="hero-icon">🎯</span>
+                    <span>Stay Organized</span>
+                </div>
+            </div>
+            <a href="#add-task-section" class="hero-cta">Get Started</a>
+        </div>
+    </section>
+
     <div class="container">
         <header>
             <h1>🚀 Task Manager</h1>
@@ -28,7 +51,7 @@
             </div>
         </div>
 
-        <div class="add-task-section">
+        <div class="add-task-section" id="add-task-section">
             <div class="input-group">
                 <input type="text" id="task-input" placeholder="Enter a new task..." maxlength="100">
                 <button id="add-task-btn">Add Task</button>
