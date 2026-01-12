@@ -87,4 +87,9 @@ def get_stats():
     })
 
 if __name__ == '__main__':
+    # Development server
     app.run(debug=True, port=5000)
+else:
+    # Production server (when imported by startup.py or gunicorn)
+    import os
+    app.debug = False

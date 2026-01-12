@@ -1,0 +1,70 @@
+name: Deploy Flask App to Azure Web App
+
+# Trigger the workflow on push to main branch or manual dispatch
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout the repository code
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Set up Python environment
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    # Create and activate virtual environment
+    - name: Create virtual environment
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        echo "VIRTUAL_ENV=.venv" >> $GITHUB_ENV
+        echo ".venv/bin" >> $GITHUB_PATH
+
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        source .venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Run tests (optional - uncomment if you add tests)
+    # - name: Run tests
+    #   run: |
+    #     source .venv/bin/activate
+    #     python -m pytest tests/ -v
+
+    # Create deployment package
+    - name: Create deployment package
+      run: |
+        # Remove virtual environment from deployment package
+        rm -rf .venv
+        # Create a zip file with application code
+        zip -r deploy.zip . -x "*.git*" "*.vscode*" "__pycache__*" "*.pyc"
+
+    # Deploy to Azure Web App
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}  # Set this in GitHub Secrets
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Set this in GitHub Secrets
+        package: deploy.zip
+
+    # Optional: Restart the web app to ensure changes take effect
+    - name: Restart Azure Web App
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
